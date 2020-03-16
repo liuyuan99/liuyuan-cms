@@ -104,7 +104,7 @@ public class MyController {
 		article.setDeleted(0);// 默认未删除
 		article.setHot(0);// 默认非热门
 		article.setStatus(1);// 默认已审核  ----  主要是测试 数据
-
+		
 		
 		return articleService.insert(article) >0;
 
@@ -196,9 +196,9 @@ public class MyController {
 			article.setDeleted(0);	//默认未删除
 			article.setHot(0);	//默认非热门
 			article.setStatus(0); //默认待审核
-			
-			return articleService.insert(article)>0;
-		
+
+			article.setContentType(ContentType.HTML);
+			return articleService.insert(article) > 0;// 增加文章
 	}
 	
 	/**

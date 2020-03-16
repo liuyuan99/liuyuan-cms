@@ -8,8 +8,7 @@ package com.liuyuan.cms.domain;
  */
 public enum ContentType {
 
-   HTML(0,"HTML"),VOTE(1,"VOTE");
-	
+	HTML(0,"HTML"),VOTE(1,"VOTE");	
 	private Integer code;
 	private String name;
 	

@@ -159,6 +159,21 @@
 			</div>
 			<div class="col-md-3">
 				<div class="card" style="width: 18rem; margin-top: 10px;">
+					<div class="card-header">问卷调查</div>
+					<div class="card-body">
+						<!-- 最新文章 --10篇 -->
+						<c:forEach items="${voteArticles.list}" var="voteArticle">
+							<div class="media">
+							
+								<div class="media-body">
+									<p><a href="/voteDetail?id=${voteArticle.id}" target="_blank">${voteArticle.title }</a></p>
+								</div>
+							</div>
+							<hr>
+						</c:forEach>
+					</div>
+				</div>
+				<div class="card" style="width: 18rem; margin-top: 10px;">
 					<div class="card-header">
 						<h4>24小时热闻</h4>
 					</div>
