@@ -1,6 +1,8 @@
 package com.liuyuan.cms.controller;
 
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,23 +10,29 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.google.gson.Gson;
 import com.liuyuan.cms.domain.Article;
 import com.liuyuan.cms.domain.Category;
 import com.liuyuan.cms.domain.Channel;
 import com.liuyuan.cms.domain.Collect;
 import com.liuyuan.cms.domain.Comment;
+import com.liuyuan.cms.domain.ContentType;
 import com.liuyuan.cms.domain.Slide;
 import com.liuyuan.cms.domain.User;
+import com.liuyuan.cms.domain.Vote;
 import com.liuyuan.cms.service.ArticleService;
 import com.liuyuan.cms.service.ChannelService;
 import com.liuyuan.cms.service.CollectService;
 import com.liuyuan.cms.service.CommentService;
 import com.liuyuan.cms.service.SlideService;
+import com.liuyuan.cms.service.VoteService;
+import com.ly.common.utils.NumberUtil;
 
 /**
  * 
@@ -50,6 +58,9 @@ public class IndexController {
 	
 	@Resource
 	private CollectService collectService;
+	
+	@Resource
+	private VoteService voteService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "3")Integer pageSize) {
@@ -82,7 +93,17 @@ public class IndexController {
 		article2.setDeleted(0);
 		PageInfo<Article> lastArticles = articleService.selects(article2,1,10);
 		model.addAttribute("lastArticles", lastArticles);
-		return "index/index";	
+
+		// 问卷调查
+		Article voteArticle = new Article();
+		voteArticle.setStatus(1);//
+		voteArticle.setDeleted(0);
+		voteArticle.setContentType(ContentType.VOTE);
+		
+		PageInfo<Article> voteArticles = articleService.selects(voteArticle, 1, 10);
+		model.addAttribute("voteArticles", voteArticles);
+		
+		return "index/index";
 	}
 	
 	/**
@@ -113,6 +134,58 @@ public class IndexController {
 		model.addAttribute("collect", collect);
 		return "index/articleDetail";
 		
+	}
+	
+	/**
+	 * 
+	 * @Title: articleDetail 
+	 * @Description: 投票详情
+	 * @param session
+	 * @param id
+	 * @param model
+	 * @return
+	 * @return: String
+	 */
+	@RequestMapping("voteDetail")
+	public String voteDetail(HttpSession session ,Integer id,Model model) {
+		Article article = articleService.select(id);
+		String content = article.getContent();
+		Gson gson =new Gson();
+		LinkedHashMap<Character,String> mapVote = gson.fromJson(content, LinkedHashMap.class);
+	
+		
+		model.addAttribute("mapVote", mapVote);
+		model.addAttribute("article", article);
+		
+		//查询出投票情况
+		
+		List<Vote> votes = voteService.selects(article.getId());
+		for (Vote vote : votes) {
+			//获取选项的值并重新封装到vote
+			vote.setOption(mapVote.get(vote.getOption()));
+			//计算百分比
+			vote.setPercent(new BigDecimal(NumberUtil.getPercent(vote.getOptionNum(), vote.getTotalNum())));
+		}
+		model.addAttribute("votes", votes);
+		return "index/voteDetail";
+		
+	}
+	
+	
+	//投票
+	@ResponseBody
+	@PostMapping("addVote")
+	public boolean addVote(Vote vote ,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(null ==user)
+		return false;//没有登录的用户不能收藏
+		vote.setUserId(user.getId());
+		//检查用户是否已经投过票
+		if(voteService.select(vote)!=null)
+			return false;
+	
+		
+		return voteService.insert(vote) >0;
 	}
 	
 	//增加评论

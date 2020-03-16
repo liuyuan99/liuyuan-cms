@@ -18,7 +18,7 @@ public class ArticleTest {
 		File file = new File("D:/article");
 		//序列化
 		ObjectOutputStream oout = new ObjectOutputStream(new FileOutputStream(file));
-		Article article = new Article(1,"hfnuasij");
+		Article article = new Article();
 		oout.writeObject(article);
 		oout.close();
 		

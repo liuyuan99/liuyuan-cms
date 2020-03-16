@@ -58,6 +58,7 @@
 					<li class="list-group-item"><a href="#" data="/my/collect"><font color="black">我的收藏</font></a></li>
 					<li class="list-group-item"><a href="#" data="/my/articles3"><font color="black">我的评论</font></a></li>
 					<li class="list-group-item"><a href="#" data="/my/articles4"><font color="black">个人中心</font></a></li>
+					<li class="list-group-item"><a href="#" data="/my/publishVote"><font color="black" >发起投票</font></a></li>
 				</ul>
 			</div>
 			<!-- 内容显示区域 -->

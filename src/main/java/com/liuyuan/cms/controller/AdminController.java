@@ -68,7 +68,7 @@ public class AdminController {
 	/**
 	 * 
 	 * @Title: updateUser 
-	 * @Description: 用户修改
+	 * @Description: 更新用户
 	 * @param user
 	 * @return
 	 * @return: Article

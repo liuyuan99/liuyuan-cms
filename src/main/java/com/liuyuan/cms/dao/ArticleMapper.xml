@@ -88,6 +88,14 @@
 			<if test="hot!=null">
 				and a.hot=#{hot}
 			</if>
+			
+			 <!-- 默认显示html的文章 -->
+			 <if test="contentType==null">
+			   and a.content_type = 0
+			 </if>
+			  <if test="contentType!=null">
+			   and a.content_type = #{contentType}
+			 </if>
 		</where>
 
 		order by created desc
