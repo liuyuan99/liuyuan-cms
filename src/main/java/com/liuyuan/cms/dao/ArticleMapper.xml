@@ -37,7 +37,7 @@
 		<result column="updated" property="updated" />
 		<result column="summary" property="summary" />
 		<result column="keywords" property="keywords" />
-		<result column="original" property="original" />
+		<result column="origin" property="origin" />
 		<!-- 封装一对一关系 -->
 		<!-- 用户 -->
 		<association property="user" javaType="User">

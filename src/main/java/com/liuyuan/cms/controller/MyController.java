@@ -168,7 +168,7 @@ public class MyController {
 	 * @return: boolean
 	 */
 	@ResponseBody
-	@RequestMapping("publish")
+	@PostMapping("publish")
 	public boolean publish(MultipartFile file,Article article,HttpSession session) {
 		//文件上传
 		if(null!=file && !file.isEmpty()) {
@@ -176,15 +176,16 @@ public class MyController {
 			//文件的原始名称
 			String filename = file.getOriginalFilename();
 			//为了防止文件重名,需要改变文件的名字
-			String newfilename = UUID.randomUUID()+filename.substring(filename.lastIndexOf("."));
-			File f = new File(path,newfilename);
+			String newFilename = UUID.randomUUID()+filename.substring(filename.lastIndexOf("."));
+			File f = new File(path,newFilename);
 			//把文件写入硬盘
+			
 			try {
 				file.transferTo(f);
-				article.setPicture(newfilename);//文件的名称
-					
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
+				article.setPicture(newFilename);// 文件的名称
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}

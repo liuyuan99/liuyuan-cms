@@ -35,12 +35,15 @@ public class Article implements Serializable{
 	private Channel channel;
 	private Category category;
 	private User user;
+	private String origin;
+	private String keywords;
 	
 	private ContentType contentType;//枚举类型=文章类型    html:普通文章类型  vote：投票类型
 
 	public Article(Integer id, String title, String summary, String content, String picture, Integer channelId,
 			Integer categoryId, Integer userId, Integer hits, Integer hot, Integer status, Integer deleted,
-			Date created, Date updated, Channel channel, Category category, User user, ContentType contentType) {
+			Date created, Date updated, Channel channel, Category category, User user, String origin, String keywords,
+			ContentType contentType) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -59,9 +62,11 @@ public class Article implements Serializable{
 		this.channel = channel;
 		this.category = category;
 		this.user = user;
+		this.origin = origin;
+		this.keywords = keywords;
 		this.contentType = contentType;
 	}
-
+	
 	public Article() {
 		super();
 	}
@@ -202,6 +207,22 @@ public class Article implements Serializable{
 		this.user = user;
 	}
 
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
 	public ContentType getContentType() {
 		return contentType;
 	}
@@ -220,8 +241,10 @@ public class Article implements Serializable{
 				+ picture + ", channelId=" + channelId + ", categoryId=" + categoryId + ", userId=" + userId + ", hits="
 				+ hits + ", hot=" + hot + ", status=" + status + ", deleted=" + deleted + ", created=" + created
 				+ ", updated=" + updated + ", channel=" + channel + ", category=" + category + ", user=" + user
-				+ ", contentType=" + contentType + "]";
+				+ ", origin=" + origin + ", keywords=" + keywords + ", contentType=" + contentType + "]";
 	}
+
+	
 	
 	
 }

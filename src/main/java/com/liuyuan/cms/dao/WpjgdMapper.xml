@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liuyuan.cms.dao.WpjgdMapper">
+  
+  	<resultMap type="Wpjgd" id="byWpjgd">
+  		<id column="id" property="id"/>
+  		<result column="llnum" property="llnum"/>
+  		<result column="bsdate" property="llnum"/>
+  		<result column="zzb" property="llnum"/>
+  		<result column="zzbid" property="llnum"/>
+  		<result column="pid" property="llnum"/>
+  		<result column="price" property="llnum"/>
+  		<result column="num" property="llnum"/>
+  		<result column="money" property="llnum"/>
+  		<result column="other" property="llnum"/>
+  		<result column="sid" property="llnum"/>
+  		<result column="sname" property="llnum"/>
+  		<result column="psdate" property="llnum"/>
+  		<result column="shmoney" property="llnum"/>
+  		<result column="shmoneys" property="llnum"/>
+  		<result column="people" property="llnum"/>
+  		<result column="img" property="llnum"/>
+  		<result column="jgdw" property="llnum"/>
+  		<result column="phpeople" property="llnum"/>
+  		<result column="jprice" property="llnum"/>
+  		<result column="jmoneys" property="llnum"/>
+  		<result column="songdate" property="llnum"/>
+  		<result column="shpeople" property="llnum"/>
+  		<result column="capeople" property="llnum"/>
+  		<result column="other1" property="llnum"/>
+  		
+  		<collection property="pname" ofType="Pj" column="id" select="byId"></collection>
+  		
+	
+  	</resultMap>
+ 	<select id="selects" resultMap="byWpjgd">
+ 		select * from cms_wpjgd
+ 		<where>
+ 			<if test="zzbid1!=null and zzbid1!=''">
+ 				and zzbid like concat('%',#{zzbid1},'%')
+ 			</if>
+ 			<if test="zzb1!=null and zzb1!=''">
+ 				and zzb like concat('%',#{zzb1},'%')
+ 			</if>
+ 			<if test="sid1!=null and sid1!=''">
+ 				and sid like concat('%',#{sid1},'%')
+ 			</if>
+ 			<if test="sname1!=null and sname1!=''">
+ 				and sname like concat('%',#{sname1},'%')
+ 			</if>
+ 			<if test="jgdw1!=null and jgdw1!=''">
+ 				and jgdw like concat('%',#{jgdw1},'%')
+ 			</if>
+ 			<if test="phpeople1!=null and phpeople1!=''">
+ 				and phpeople like concat('%',#{phpeople1},'%')
+ 			</if>
+ 			<if test="shpeople1!=null and shpeople1!=''">
+ 				and shpeople like concat('%',#{shpeople1},'%')
+ 			</if>
+ 			<if test="cgpeople1!=null and cgpeople1!=''">
+ 				and cgpeople like concat('%',#{cgpeople1},'%')
+ 			</if>
+ 			<if test="other2!=null and other2!=''">
+ 				and other1 like concat('%',#{other2},'%')
+ 			</if>
+ 			<if test="bsdate1!=null and bsdate1!=''">
+ 				and bsdate &gt;=#{bsdate1}
+ 			</if>
+ 			<if test="bsdate2!=null and bsdate2!=''">
+ 				and bsdate &lt;=#{bsdate2}
+ 			</if>
+ 		</where>
+ 	</select>
+
+	<select id="byId" resultType="Pj">
+		select * from cms_pj pj left join cms_wpjgd wp on pj.id=wp.pname 
+	</select>
+</mapper>

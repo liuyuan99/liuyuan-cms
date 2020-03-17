@@ -1,11 +1,5 @@
 package com.liuyuan.cms.domain;
-/**
- * 
- * @ClassName: ContentType 
- * @Description: 文章类型 枚举类型
- * @author: charles
- * @date: 2020年3月15日 上午10:38:32
- */
+
 public enum ContentType {
 
 	HTML(0,"HTML"),VOTE(1,"VOTE");	
